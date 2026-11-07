@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "name": "CHRONOS adaptive compute-heavy workload",
+  "events": [
+    { "id": 1, "label": "source-1", "operation": { "type": "input", "value": 11 } },
+    { "id": 2, "label": "source-2", "operation": { "type": "input", "value": 17 } },
+    { "id": 3, "label": "source-3", "operation": { "type": "input", "value": 23 } },
+    { "id": 4, "label": "source-4", "operation": { "type": "input", "value": 29 } },
+    { "id": 5, "label": "source-5", "operation": { "type": "input", "value": 31 } },
+    { "id": 6, "label": "source-6", "operation": { "type": "input", "value": 37 } },
+    { "id": 7, "label": "source-7", "operation": { "type": "input", "value": 41 } },
+    { "id": 8, "label": "source-8", "operation": { "type": "input", "value": 43 } },
+    { "id": 101, "label": "mix-1", "operation": { "type": "hash_rounds", "input": 1, "rounds": 250000 } },
+    { "id": 102, "label": "mix-2", "operation": { "type": "hash_rounds", "input": 2, "rounds": 250000 } },
+    { "id": 103, "label": "mix-3", "operation": { "type": "hash_rounds", "input": 3, "rounds": 250000 } },
+    { "id": 104, "label": "mix-4", "operation": { "type": "hash_rounds", "input": 4, "rounds": 250000 } },
+    { "id": 105, "label": "mix-5", "operation": { "type": "hash_rounds", "input": 5, "rounds": 250000 } },
+    { "id": 106, "label": "mix-6", "operation": { "type": "hash_rounds", "input": 6, "rounds": 250000 } },
+    { "id": 107, "label": "mix-7", "operation": { "type": "hash_rounds", "input": 7, "rounds": 250000 } },
+    { "id": 108, "label": "mix-8", "operation": { "type": "hash_rounds", "input": 8, "rounds": 250000 } }
+  ]
+}

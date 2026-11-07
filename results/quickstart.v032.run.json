@@ -1,0 +1,59 @@
+{
+  "record_version": 2,
+  "program_hash": "eae39ae1cdfe83a868042b86a4bca8d70f644f62f4240f5d504f56d382266df1",
+  "execution": {
+    "values": {
+      "1": 144,
+      "2": 12,
+      "3": 156,
+      "4": 132,
+      "5": 20592,
+      "6": 12,
+      "7": 2026
+    },
+    "order": [
+      1,
+      2,
+      7,
+      3,
+      4,
+      6,
+      5
+    ],
+    "layers": [
+      [
+        1,
+        2,
+        7
+      ],
+      [
+        3,
+        4,
+        6
+      ],
+      [
+        5
+      ]
+    ]
+  },
+  "metrics": {
+    "strategy": "sequential",
+    "elapsed_ns": 18900,
+    "event_count": 7,
+    "dependency_count": 8,
+    "worker_count": 1,
+    "maximum_in_flight": 1,
+    "maximum_ready_queue": 3,
+    "graph_depth": 3,
+    "graph_maximum_width": 3
+  },
+  "completion_order": [
+    1,
+    2,
+    7,
+    3,
+    4,
+    6,
+    5
+  ]
+}

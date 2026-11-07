@@ -1,0 +1,40 @@
+CHRONOS final v0.2 workload-suite benchmark
+Date: 2026-11-07
+OS: Microsoft Windows 11 Home Single Language
+CPU: 12th Gen Intel(R) Core(TM) i5-12450HX
+Logical processors: 12
+Toolchain: stable-x86_64-pc-windows-gnu, Rust 1.99.0
+Profile: Cargo bench (optimized)
+Workers: 12 persistent worker threads per workload case
+Warmups: 5 per mode
+Timed samples: 31 per mode; median and nearest-rank p95
+Timings exclude parsing, graph compilation, process startup, and worker-pool startup.
+The same CausalEngine instance is reused across all timed samples for a graph.
+Every runtime sample is compared with the sequential ExecutionReport.
+All values are preliminary and apply only to this machine and these workloads.
+
+shape=chain            width=64    events=66    edges=128   depth=65    max_width=2      compile=70.5us     seq_median=5us       seq_p95=6.9us      runtime_median=62us       runtime_p95=91.2us       seq/runtime=0.081x
+shape=wide-antichain   width=64    events=64    edges=0     depth=1     max_width=64     compile=24.6us     seq_median=2us       seq_p95=2.3us      runtime_median=21.5us     runtime_p95=44.1us       seq/runtime=0.093x
+shape=balanced-tree    width=64    events=127   edges=126   depth=7     max_width=64     compile=56.6us     seq_median=5us       seq_p95=6.4us      runtime_median=39.7us     runtime_p95=51.3us       seq/runtime=0.126x
+shape=fanout           width=64    events=66    edges=128   depth=2     max_width=64     compile=28.8us     seq_median=2.1us     seq_p95=2.3us      runtime_median=24.7us     runtime_p95=49.5us       seq/runtime=0.085x
+shape=skewed-depth     width=64    events=130   edges=128   depth=65    max_width=66     compile=57.3us     seq_median=7.2us     seq_p95=9.2us      runtime_median=96us       runtime_p95=112us         seq/runtime=0.075x
+
+shape=chain            width=256   events=258   edges=512   depth=257   max_width=2      compile=131.9us    seq_median=21.8us    seq_p95=26.6us     runtime_median=221us      runtime_p95=253.1us      seq/runtime=0.099x
+shape=wide-antichain   width=256   events=256   edges=0     depth=1     max_width=256    compile=59.8us     seq_median=8.2us     seq_p95=11.4us     runtime_median=75.8us     runtime_p95=98.6us       seq/runtime=0.108x
+shape=balanced-tree    width=256   events=511   edges=510   depth=9     max_width=256    compile=205.3us    seq_median=28.8us    seq_p95=33us       runtime_median=221.5us    runtime_p95=240.5us      seq/runtime=0.130x
+shape=fanout           width=256   events=258   edges=512   depth=2     max_width=256    compile=99.2us     seq_median=11.4us    seq_p95=23.2us     runtime_median=134.4us    runtime_p95=157.6us      seq/runtime=0.085x
+shape=skewed-depth     width=256   events=514   edges=512   depth=257   max_width=258    compile=193.3us    seq_median=36.8us    seq_p95=45.3us     runtime_median=351.4us    runtime_p95=387us         seq/runtime=0.105x
+
+shape=chain            width=1024  events=1026  edges=2048  depth=1025  max_width=2      compile=513.6us    seq_median=141.8us   seq_p95=147us      runtime_median=1.0091ms   runtime_p95=1.2108ms    seq/runtime=0.141x
+shape=wide-antichain   width=1024  events=1024  edges=0     depth=1     max_width=1024   compile=238.7us    seq_median=66.6us    seq_p95=71.5us     runtime_median=334.4us    runtime_p95=351.9us      seq/runtime=0.199x
+shape=balanced-tree    width=1024  events=2047  edges=2046  depth=11    max_width=1024   compile=840.7us    seq_median=237.2us   seq_p95=275.3us    runtime_median=992.6us    runtime_p95=1.0661ms    seq/runtime=0.239x
+shape=fanout           width=1024  events=1026  edges=2048  depth=2     max_width=1024   compile=400.4us    seq_median=70.2us    seq_p95=75.7us     runtime_median=498.8us    runtime_p95=533us        seq/runtime=0.141x
+shape=skewed-depth     width=1024  events=2050  edges=2048  depth=1025  max_width=1026   compile=755.3us    seq_median=234.3us   seq_p95=243.5us    runtime_median=1.3531ms   runtime_p95=1.4377ms    seq/runtime=0.173x
+
+Interpretation:
+- The dynamic runtime is slower than the sequential reference in all 15 cases.
+- seq/runtime is sequential median divided by causal-runtime median; all values below 1 mean sequential wins on these workloads.
+- The highest observed ratio is 0.239x for a balanced tree at width 1024; the runtime remains about 4.2 times slower at the median.
+- A compact fixed-size worker input snapshot reduced per-task data structure overhead but did not remove channel/scheduler/bookkeeping costs.
+- This is a negative performance result for small pure integer operations, not a claim that causal scheduling is generally slower.
+- Further work should compare a sequential cutoff, adaptive scheduling, and compact array-indexed graph storage, and add operations with meaningful computation cost.

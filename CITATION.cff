@@ -1,0 +1,6 @@
+cff-version: 1.2.0
+message: "If you use CHRONOS in research, cite this repository and its associated research release."
+title: "CHRONOS: A Deterministic Causal-Computation Runtime and Research Platform"
+version: 0.3.2
+date-released: 2026-11-07
+type: software

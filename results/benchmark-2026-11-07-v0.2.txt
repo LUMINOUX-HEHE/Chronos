@@ -1,0 +1,22 @@
+CHRONOS v0.2 persistent-runtime benchmark
+Date: 2026-11-07
+OS: Microsoft Windows 11 Home Single Language
+CPU: 12th Gen Intel(R) Core(TM) i5-12450HX
+Logical processors: 12
+Toolchain: stable-x86_64-pc-windows-gnu, rustc 1.99.0
+Profile: Cargo bench (optimized)
+Workload: balanced reduction trees with integer-one input leaves
+Graph compilation measured separately and excluded from evaluator timing.
+Worker pool: 12 persistent worker threads per graph; same engine reused for 10 warmups and 51 timed evaluations.
+Statistics: median and p95. One machine and one workload family; preliminary only.
+
+width=64    events=127    layers=7    compile=244.5us      sequential_median=5.5us       sequential_p95=18us        runtime_median=50.7us       runtime_p95=66us
+width=512   events=1023   layers=10   compile=408.6us      sequential_median=125.7us    sequential_p95=219.7us     runtime_median=573.2us      runtime_p95=870.3us
+width=4096  events=8191   layers=13   compile=3.5674ms     sequential_median=1.1494ms   sequential_p95=1.2073ms    runtime_median=5.2979ms    runtime_p95=5.913ms
+
+Interpretation:
+- The dynamic persistent runtime is slower than the sequential reference on these tiny integer DAGs.
+- Approximate sequential/runtime median ratios: 0.109x, 0.219x, and 0.217x. Values below 1 mean the causal runtime is slower for this workload.
+- Persistent worker startup is excluded, but per-event queueing, cloning, scheduling, channel, and bookkeeping overhead remains.
+- This is not evidence that causal-DAG execution is generally slower; it is evidence that the current implementation does not pay off for cheap integer operations on these graphs.
+- Future workloads must include skewed task costs, fan-out, wide frontiers, and realistic computation. Compare against mature DAG/dataflow baselines.

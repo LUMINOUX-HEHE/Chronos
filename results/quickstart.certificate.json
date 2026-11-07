@@ -1,0 +1,92 @@
+{
+  "format_version": 1,
+  "program_hash": "eae39ae1cdfe83a868042b86a4bca8d70f644f62f4240f5d504f56d382266df1",
+  "entries": [
+    {
+      "event_id": 1,
+      "inputs": [],
+      "output": 144,
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "entry_hash": "11c9ee2db145b5d6133e23c8b5ff3ce7512404b2806d769ca6e93211e23aee5e"
+    },
+    {
+      "event_id": 2,
+      "inputs": [],
+      "output": 12,
+      "previous_hash": "11c9ee2db145b5d6133e23c8b5ff3ce7512404b2806d769ca6e93211e23aee5e",
+      "entry_hash": "bf38bcf235246eec07ef10074dd239e143056fc0873e1482324cbf6eff2ef7ae"
+    },
+    {
+      "event_id": 7,
+      "inputs": [],
+      "output": 2026,
+      "previous_hash": "bf38bcf235246eec07ef10074dd239e143056fc0873e1482324cbf6eff2ef7ae",
+      "entry_hash": "f36a7c678d1a6490b346bc697723552c896fab380a51fb3977f0984b1c3290aa"
+    },
+    {
+      "event_id": 3,
+      "inputs": [
+        {
+          "event_id": 1,
+          "value": 144
+        },
+        {
+          "event_id": 2,
+          "value": 12
+        }
+      ],
+      "output": 156,
+      "previous_hash": "f36a7c678d1a6490b346bc697723552c896fab380a51fb3977f0984b1c3290aa",
+      "entry_hash": "4b123af62802163ef50faf6a077bc063103c144566c05cc0058faa31cf3cd4ac"
+    },
+    {
+      "event_id": 4,
+      "inputs": [
+        {
+          "event_id": 1,
+          "value": 144
+        },
+        {
+          "event_id": 2,
+          "value": 12
+        }
+      ],
+      "output": 132,
+      "previous_hash": "4b123af62802163ef50faf6a077bc063103c144566c05cc0058faa31cf3cd4ac",
+      "entry_hash": "b576dd7c8133b367b38718f34653b2a9efcb7088224adf342ad8ab80c8df65b5"
+    },
+    {
+      "event_id": 6,
+      "inputs": [
+        {
+          "event_id": 1,
+          "value": 144
+        },
+        {
+          "event_id": 2,
+          "value": 12
+        }
+      ],
+      "output": 12,
+      "previous_hash": "b576dd7c8133b367b38718f34653b2a9efcb7088224adf342ad8ab80c8df65b5",
+      "entry_hash": "f15f36699d77b8e0d49eba32b2ca53d2bfe491fd1deda14635d27508b8f6c075"
+    },
+    {
+      "event_id": 5,
+      "inputs": [
+        {
+          "event_id": 3,
+          "value": 156
+        },
+        {
+          "event_id": 4,
+          "value": 132
+        }
+      ],
+      "output": 20592,
+      "previous_hash": "f15f36699d77b8e0d49eba32b2ca53d2bfe491fd1deda14635d27508b8f6c075",
+      "entry_hash": "2a3a036ef284f51a1783f9db8b28257c672e7eb28ebfd0e4e20e8d402661bc78"
+    }
+  ],
+  "root_hash": "2a3a036ef284f51a1783f9db8b28257c672e7eb28ebfd0e4e20e8d402661bc78"
+}

@@ -1,0 +1,39 @@
+CHRONOS v0.2.1 workload-suite benchmark
+Date: 2026-11-07
+OS: Microsoft Windows 11 Home Single Language
+CPU: 12th Gen Intel(R) Core(TM) i5-12450HX
+Logical processors: 12
+Toolchain: stable-x86_64-pc-windows-gnu, Rust 1.99.0
+Profile: Cargo bench (optimized)
+Workers: 12 persistent worker threads per workload case
+Warmups: 5 per mode
+Timed samples: 31 per mode; median and p95
+Timings exclude parsing, graph compilation, process startup and worker-pool startup.
+Every runtime sample was checked against the sequential reference report.
+All times are from a single laptop and should be treated as preliminary.
+
+shape=chain            width=64   events=66    edges=128   depth=65    max_width=2     compile=172.3us    seq_median=4.8us     seq_p95=6.1us      runtime_median=57us       runtime_p95=64.2us      seq/runtime=0.084x
+shape=wide-antichain   width=64   events=64    edges=0     depth=1     max_width=64    compile=19.6us     seq_median=2us       seq_p95=2.1us      runtime_median=20.6us     runtime_p95=35.8us      seq/runtime=0.097x
+shape=balanced-tree    width=64   events=127   edges=126   depth=7     max_width=64    compile=54.2us     seq_median=5.1us     seq_p95=6.1us      runtime_median=38.5us     runtime_p95=53.2us      seq/runtime=0.132x
+shape=fanout           width=64   events=66    edges=128   depth=2     max_width=64    compile=34.3us     seq_median=2.1us     seq_p95=2.5us      runtime_median=22us       runtime_p95=35.6us      seq/runtime=0.095x
+shape=skewed-depth     width=64   events=130   edges=128   depth=65    max_width=66    compile=63.8us     seq_median=7us       seq_p95=8.3us      runtime_median=100.3us    runtime_p95=123.1us     seq/runtime=0.070x
+
+shape=chain            width=256  events=258   edges=512   depth=257   max_width=2     compile=148.2us    seq_median=20.2us    seq_p95=22.6us     runtime_median=262.1us    runtime_p95=347.9us     seq/runtime=0.077x
+shape=wide-antichain   width=256  events=256   edges=0     depth=1     max_width=256   compile=58.5us     seq_median=8.2us     seq_p95=10.3us     runtime_median=82.3us     runtime_p95=118.4us     seq/runtime=0.100x
+shape=balanced-tree    width=256  events=511   edges=510   depth=9     max_width=256   compile=190.4us    seq_median=31.3us    seq_p95=34.9us     runtime_median=253.3us    runtime_p95=325.6us     seq/runtime=0.124x
+shape=fanout           width=256  events=258   edges=512   depth=2     max_width=256   compile=106.9us    seq_median=9.5us     seq_p95=11us       runtime_median=131us      runtime_p95=137.3us     seq/runtime=0.073x
+shape=skewed-depth     width=256  events=514   edges=512   depth=257   max_width=258   compile=212.8us    seq_median=38us      seq_p95=43us       runtime_median=354.3us    runtime_p95=404.7us     seq/runtime=0.107x
+
+shape=chain            width=1024 events=1026  edges=2048  depth=1025  max_width=2     compile=542.2us    seq_median=140.4us   seq_p95=146.3us    runtime_median=982.1us    runtime_p95=1.0682ms   seq/runtime=0.143x
+shape=wide-antichain   width=1024 events=1024  edges=0     depth=1     max_width=1024  compile=257.5us    seq_median=72.7us    seq_p95=77.1us     runtime_median=358.6us    runtime_p95=393.2us     seq/runtime=0.203x
+shape=balanced-tree    width=1024 events=2047  edges=2046  depth=11    max_width=1024  compile=835.4us    seq_median=230.6us   seq_p95=239.8us    runtime_median=1.0029ms   runtime_p95=1.0889ms   seq/runtime=0.230x
+shape=fanout           width=1024 events=1026  edges=2048  depth=2     max_width=1024  compile=436.2us    seq_median=76us      seq_p95=79.9us      runtime_median=492.2us    runtime_p95=541.4us     seq/runtime=0.154x
+shape=skewed-depth     width=1024 events=2050  edges=2048  depth=1025  max_width=1026  compile=744.5us    seq_median=232.3us   seq_p95=240.1us    runtime_median=1.3577ms   runtime_p95=1.4487ms   seq/runtime=0.171x
+
+Interpretation:
+- The dynamic runtime is slower than the sequential evaluator in all 15 measured cases.
+- The seq/runtime ratio is below 1 in all cases; this ratio is sequential median divided by runtime median.
+- The wider graphs reduce but do not eliminate the relative overhead.
+- The graph families isolate chain depth, independent ready-frontier width, balanced fan-in, fan-out, and a skewed critical chain.
+- The current engine is a correctness/semantics and research platform, not a demonstrated high-performance scheduler.
+- The next optimization study should compare compact array-backed graph storage, lower-overhead dispatch, batching, sequential cutoffs, and realistic operation costs. Keep all scheduler variants semantically equivalent and benchmark worker-pool startup separately.

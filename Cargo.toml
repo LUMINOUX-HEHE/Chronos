@@ -1,0 +1,4 @@
+[workspace]
+resolver = "2"
+members = ["crates/chronos-core"]
+default-members = ["crates/chronos-core"]

@@ -1,0 +1,19 @@
+digraph CHRONOS {
+  rankdir=LR;
+  node [shape=box, style=rounded];
+  n1 [label="1: input-a"];
+  n2 [label="2: input-b"];
+  n7 [label="7: independent-input"];
+  n3 [label="3: sum"];
+  n4 [label="4: difference"];
+  n6 [label="6: quotient"];
+  n5 [label="5: product"];
+  n1 -> n3;
+  n2 -> n3;
+  n1 -> n4;
+  n2 -> n4;
+  n1 -> n6;
+  n2 -> n6;
+  n3 -> n5;
+  n4 -> n5;
+}

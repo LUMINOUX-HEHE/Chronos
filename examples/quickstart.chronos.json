@@ -1,0 +1,13 @@
+{
+  "format_version": 1,
+  "name": "CHRONOS quickstart",
+  "events": [
+    { "id": 1, "label": "input-a", "operation": { "type": "input", "value": 144 } },
+    { "id": 2, "label": "input-b", "operation": { "type": "input", "value": 12 } },
+    { "id": 3, "label": "sum", "operation": { "type": "add", "left": 1, "right": 2 } },
+    { "id": 4, "label": "difference", "operation": { "type": "sub", "left": 1, "right": 2 } },
+    { "id": 5, "label": "product", "operation": { "type": "mul", "left": 3, "right": 4 } },
+    { "id": 6, "label": "quotient", "operation": { "type": "div", "left": 1, "right": 2 } },
+    { "id": 7, "label": "independent-input", "operation": { "type": "input", "value": 2026 } }
+  ]
+}

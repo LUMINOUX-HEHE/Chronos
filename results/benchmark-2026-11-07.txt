@@ -1,0 +1,25 @@
+CHRONOS benchmark record
+Date: 2026-11-07
+OS: Microsoft Windows 11 Home Single Language
+CPU: 12th Gen Intel(R) Core(TM) i5-12450HX
+Logical processors reported by Windows: 12
+Rust: rustc 1.99.0 (b940084d7 2026-09-28)
+Cargo: cargo 1.99.0 (5f94df478 2026-08-27)
+Profile: Cargo bench (optimized)
+Workload: balanced reduction tree; each leaf input is integer 1
+Compilation is measured separately from evaluator latency.
+Warm-ups per evaluator and width: 10
+Timed samples per evaluator and width: 51
+Statistics: median and p95; one-machine preliminary experiment, not a formal performance study.
+
+width=64    events=127    layers=7    compile=164.3us     seq_median=7.8us       seq_p95=8.3us       par_median=1.2549ms    par_p95=1.5206ms
+width=512   events=1023   layers=10   compile=436.3us     seq_median=91.8us     seq_p95=99.4us     par_median=2.3104ms    par_p95=2.6648ms
+width=4096  events=8191   layers=13   compile=3.4409ms    seq_median=1.1076ms  seq_p95=1.1999ms  par_median=4.0008ms    par_p95=4.33ms
+
+Interpretation:
+- The scoped-thread layer-parallel evaluator is slower at every tested width.
+- Median parallel/sequential latency ratios are approximately 161x, 25.2x, and 3.61x slower.
+- Thread startup, joins, synchronization, and layer barriers dominate cheap integer operations.
+- The ratio narrows with graph width, but the implementation does not show a speedup on this workload.
+- This is a negative preliminary result, not evidence that causal execution itself is slower.
+- Next: compare a persistent worker pool and a ready-queue scheduler; include heavier operations and varied DAG structures; repeat on a second machine.

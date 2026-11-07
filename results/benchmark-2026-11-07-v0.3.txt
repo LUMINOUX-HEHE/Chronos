@@ -1,0 +1,45 @@
+CHRONOS v0.3.0 adaptive execution-policy benchmark
+Date: 2026-11-07
+OS: Microsoft Windows 11 Home Single Language
+CPU: 12th Gen Intel(R) Core(TM) i5-12450HX
+Logical processors: 12
+Toolchain: stable-x86_64-pc-windows-gnu, Rust 1.99.0
+Profile: Cargo bench (optimized)
+Workers: 12 configured; worker pool starts lazily and is reused
+Warmups: 5 per mode
+Timed samples: 31 per mode; median and nearest-rank p95
+Timings exclude parsing, graph compilation, process startup and worker-pool startup.
+All parallel/adaptive reports were compared with the sequential reference.
+This run was taken after the graph compiler's direct resource caps were added.
+
+Columns are median/p95. seq/adaptive >1 means adaptive is faster than sequential. Values below 1 mean adaptive reporting/policy overhead remains.
+
+shape             width  events  seq median      seq p95      parallel median  parallel p95   adaptive median  adaptive p95   policy  seq/parallel  seq/adaptive
+chain             64     66      4.5us           4.9us        58.1us           69.3us         5.1us            5.8us          Seq     0.077x        0.882x
+wide-antichain    64     64      1.9us           2.2us        20.8us           27.5us         2.5us            3.8us          Seq     0.091x        0.760x
+balanced-tree     64     127     5.1us           6.3us        42.6us           77.9us         5.9us            6.4us          Seq     0.120x        0.864x
+fanout            64     66      2.2us           2.3us        19.8us           33.7us         2.7us            2.8us          Seq     0.111x        0.815x
+skewed-depth      64     130     7.2us           7.5us        75.3us           103.3us        7.9us            10.2us         Seq     0.096x        0.911x
+
+chain             256    258     20.5us          22.7us       206.2us          241.6us        22.3us           24.5us         Seq     0.099x        0.919x
+wide-antichain    256    256     8.8us           12.1us       82.3us           124.2us        9.7us            11.6us         Seq     0.107x        0.907x
+balanced-tree     256    511     26.8us          36.5us       231.8us          294.3us        29.0us           35.2us         Seq     0.116x        0.924x
+fanout            256    258     9.6us           10.2us       138.4us          246.2us        17.8us           19.3us         Seq     0.069x        0.539x
+skewed-depth      256    514     31.5us          38.8us       375.9us          603.8us        34.7us           40.7us         Seq     0.084x        0.908x
+
+chain             1024   1026    144.0us         225.8us      876.9us          991.6us        149.4us          153.4us        Seq     0.164x        0.964x
+wide-antichain    1024   1024    65.7us          92.0us       361.2us          425.5us        69.6us           77.9us         Seq     0.182x        0.944x
+balanced-tree     1024   2047    219.5us         228.5us      962.4us          1.4289ms      230.7us          239.5us        Seq     0.228x        0.951x
+fanout            1024   1026    67.2us          72.7us       498.3us          636.6us        78.8us           86.4us         Seq     0.135x        0.853x
+skewed-depth      1024   2050    228.4us         236.6us      1.3007ms        1.5708ms       247.0us          389.0us        Seq     0.176x        0.925x
+
+expensive-wide    16     32      7.805ms         10.9061ms    1.1283ms         1.6497ms       1.0694ms         1.2492ms       Par     6.917x        7.298x
+
+Interpretation:
+- The adaptive policy selected sequential execution for all 15 inexpensive graph cases, avoiding the much larger forced-parallel overhead.
+- Adaptive evaluation still adds a small amount of report/metrics overhead compared with the reference evaluator on cheap workloads. The ratio is affected by the machine's load and sampling variability.
+- The adaptive policy selected parallel execution for the compute-heavy graph: 16 independent HashRounds operations, 150,000 rounds per operation, 32 total events, maximum width 16.
+- On that workload, forced-parallel median was 1.1283 ms and adaptive median was 1.0694 ms, versus 7.805 ms sequential. Adaptive was approximately 7.30x faster than sequential at the median.
+- This is a positive result for one bounded synthetic workload on one laptop, not a general performance guarantee.
+- HashRounds is a deterministic CPU workload, not a cryptographic primitive.
+- Follow-up: sweep thresholds/worker counts and benchmark heterogeneous costs, seeded random DAGs, other machines, and a mature external runtime.

@@ -1,0 +1,12 @@
+# CHRONOS source language quickstart
+program "CHRONOS source quickstart";
+
+# Named inputs and derived events.
+a = input(144);
+b = input(12);
+
+sum = add(a, b);
+difference = sub(a, b);
+product = mul(sum, difference);
+quotient = div(a, b);
+independent = input(2026);
